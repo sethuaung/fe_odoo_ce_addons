@@ -110,19 +110,19 @@
     <hr class="w3-opacity">
   <h4>Odoo-15 & Odoo-17</h4>
     <input type="text" value="https://github.com/sethuaung/Felixent_odoo_addons.git" id="copyMe">
-    <button onclick="copyMyText()">Copy To Clipboard</button>
+    <button onclick="copyToClipboard('copyMe')">Copy To Clipboard</button>
       <hr class="w3-opacity">
       <div> 
     <h4>Odoo-15 (Old-Addons) </h4>
     <hr class="w3-opacity">
     <input type="text" value="https://github.com/sethuaung/odoo-addons.git" id="copyMe2">
-    <button onclick="copyMyText()">Copy To Clipboard</button>
+    <button onclick="copyToClipboard('copyMe2')">Copy To Clipboard</button>
       </div>
       <hr class="w3-opacity">
       <div> 
     <h4>Odoo-15 (CybroAddons) </h4>
     <input type="text" value="https://github.com/sethuaung/Odoo_CybroAddons" id="copyMe3">
-    <button onclick="copyMyText()">Copy To Clipboard</button>    
+    <button onclick="copyToClipboard('copyMe3')">Copy To Clipboard</button>    
       </div>
   </div>
   </div>
@@ -159,34 +159,18 @@
 <!-- End page content -->
 <!-- Click Copy -->
 <script>
-  function copyMyText() {
-       //select the element with the id "copyMe", must be a text box
-       var textToCopy = document.getElementById("copyMe");
-       //select the text in the text box
-       textToCopy.select();
-       //copy the text to the clipboard
-       document.execCommand("copy");
-  }
-  </script>
-    <script>
-  function copyMyText() {
-       //select the element with the id "copyMe", must be a text box
-       var textToCopy = document.getElementById("copyMe2");
-       //select the text in the text box
-       textToCopy.select();
-       //copy the text to the clipboard
-       document.execCommand("copy");
-  }
-  </script>
-    <script>
-  function copyMyText() {
-       //select the element with the id "copyMe", must be a text box
-       var textToCopy = document.getElementById("copyMe3");
-       //select the text in the text box
-       textToCopy.select();
-       //copy the text to the clipboard
-       document.execCommand("copy");
-  }
+    function copyToClipboard(elementId) {
+        //select the element with the id "copyMe", must be a text box
+    var copyText = document.getElementById(elementId);
+    copyText.select();
+        //select the text in the text box
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value).then(() => {
+        alert("Copied the text: " + copyText.value);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
   </script>
 </div>
 </body>
