@@ -67,6 +67,7 @@
   <!-- <img src="/w3images/snow.jpg" alt="Snow" style="width:100%"> -->
   <div class="w3-container">
   <h3>Odoo-15</h3>
+    <hr class="w3-opacity">
   <h4>Odoo-Community</h4>
 <p>1. OHRMS </p>
 <p>2. Accounting </p>
@@ -77,7 +78,7 @@
 <p>7. Salon Management</p>
 <p>8. Point of Sales</p>
 <p>9. Helpdesk Management</p>
-<p>9. Dashboard</p>      
+<p>10. Dashboard</p>      
   </div>
   </div>
 </div>
@@ -87,6 +88,7 @@
   <!-- <img src="/w3images/lights.jpg" alt="Lights" style="width:100%"> -->
   <div class="w3-container">
   <h3>Odoo-17</h3>
+    <hr class="w3-opacity">
   <h4>Odoo-Community</h4>
 <p>1. OHRMS </p>
 <p>2. Accounting </p>
@@ -105,19 +107,21 @@
   <!-- <img src="/w3images/mountains.jpg" alt="Mountains" style="width:100%">  -->
   <div class="w3-container">
   <h3>Get the Odoo-Custom-Addons</h3>
+    <hr class="w3-opacity">
   <h4>Odoo-15 & Odoo-17</h4>
     <input type="text" value="https://github.com/sethuaung/Felixent_odoo_addons.git" id="copyMe">
     <button onclick="copyMyText()">Copy To Clipboard</button>
       <hr class="w3-opacity">
       <div> 
     <h4>Odoo-15 (Old-Addons) </h4>
-    <input type="text" value="https://github.com/sethuaung/odoo-addons.git" id="copyMe">
+    <hr class="w3-opacity">
+    <input type="text" value="https://github.com/sethuaung/odoo-addons.git" id="copyMe2">
     <button onclick="copyMyText()">Copy To Clipboard</button>
       </div>
       <hr class="w3-opacity">
       <div> 
     <h4>Odoo-15 (CybroAddons) </h4>
-    <input type="text" value="https://github.com/sethuaung/Odoo_CybroAddons" id="copyMe">
+    <input type="text" value="https://github.com/sethuaung/Odoo_CybroAddons" id="copyMe3">
     <button onclick="copyMyText()">Copy To Clipboard</button>    
       </div>
   </div>
@@ -158,6 +162,26 @@
   function copyMyText() {
        //select the element with the id "copyMe", must be a text box
        var textToCopy = document.getElementById("copyMe");
+       //select the text in the text box
+       textToCopy.select();
+       //copy the text to the clipboard
+       document.execCommand("copy");
+  }
+  </script>
+    <script>
+  function copyMyText() {
+       //select the element with the id "copyMe", must be a text box
+       var textToCopy = document.getElementById("copyMe2");
+       //select the text in the text box
+       textToCopy.select();
+       //copy the text to the clipboard
+       document.execCommand("copy");
+  }
+  </script>
+    <script>
+  function copyMyText() {
+       //select the element with the id "copyMe", must be a text box
+       var textToCopy = document.getElementById("copyMe3");
        //select the text in the text box
        textToCopy.select();
        //copy the text to the clipboard
