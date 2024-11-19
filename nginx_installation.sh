@@ -3,7 +3,8 @@
 ##
 # This script creates a self-signed certificate and configuration file for Nginx.
 # Nginx is used as a reverse proxy for Odoo.
-# 
+# Author: Blisqy
+# https://www.felixent.net/
 # For examples:
 #   subdomain1.felixent.net -> using the Odoo database1.
 #   subdomain2.felixent.net -> using the Odoo database2.
@@ -129,11 +130,11 @@ server {
     proxy_buffering off;
     location / {
         #try_files \$uri \$uri/ @proxy;
-        proxy_pass http://odoo9;
+        proxy_pass http://odoo17;
         proxy_redirect default;
     }
     location /longpolling {
-        proxy_pass http://odoo9-im;
+        proxy_pass http://odoo17-im;
     }
     
     # cache some static data in memory for 60mins.
@@ -143,12 +144,12 @@ server {
         proxy_buffering on;
         expires 864000;
         #try_files $uri $uri/ @proxy;
-        proxy_pass http://odoo9;
+        proxy_pass http://odoo17;
         #proxy_redirect default;
         #proxy_redirect off;
     }
     location @proxy {
-        proxy_pass http://odoo9;
+        proxy_pass http://odoo17;
         proxy_redirect default;
         #proxy_redirect off;
     }
