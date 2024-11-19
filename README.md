@@ -1,5 +1,4 @@
-# felixent.net
-Felient's Odoo-Addons
+# Felient's Odoo-Addons
 
 ### The MIT License (MIT)
 
