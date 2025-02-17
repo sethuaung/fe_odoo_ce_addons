@@ -1,0 +1,16 @@
+[Unit]
+Description=Felixent Odoo 18.0 Service
+Requires=postgresql.service
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+SyslogIdentifier=odoo
+PermissionsStartOnly=true
+User=odoo18
+Group=odoo18
+ExecStart=/opt/odoo18/odoo/venv/bin/python3 /opt/odoo18/odoo/odoo-bin -c /etc/odoo18.conf
+StandardOutput=journal+console
+
+[Install]
+WantedBy=multi-user.target
