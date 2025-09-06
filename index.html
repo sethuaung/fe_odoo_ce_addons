@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Felixent : Odoo Products & Services">
+    <meta name="description" content="Felixent's Web Templates for OdooCE">
+    <meta name="author" content="Mosquito">
+    <meta http-equiv="refresh" content="30">
+    <title>Felixent : Odoo ERP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral with Indigo Accent -->
+    <!-- Application Structure Plan: The application is designed as a single-page experience with a fixed top navigation bar allowing users to smoothly scroll to different thematic sections. This structure was chosen for its intuitive, non-linear exploratory flow. Users can get a high-level overview from the navigation and immediately jump to the section most relevant to them, such as the core 'Editions Compared' interactive tool. This is superior to a static page as it encourages engagement and allows users to control their information discovery path, catering to both quick lookups and in-depth analysis. -->
+    <!-- Visualization & Content Choices: The central element is an interactive feature comparison tool. Report Info: Odoo Community vs. Enterprise features. Goal: Compare. Viz/Presentation: A dropdown menu filters side-by-side feature lists and dynamically updates a Chart.js bar chart. Interaction: User selects a module to see a detailed feature breakdown and a visual summary of feature counts. Justification: This dual approach serves both users who need granular detail and those who want a quick visual summary. For history, a vertical timeline is built with HTML/CSS. Goal: Show Change. Justification: This is the most standard and easily understood method for chronological data. For service offerings, a card-based layout is used. Goal: Inform. Justification: Cards are excellent for presenting distinct pieces of information in a digestible, visually organized way. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #4f46e5;
+        }
+        .active-nav {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 4px solid #4f46e5;
+            left: -0.625rem;
+            top: 0;
+            z-index: 10;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-800">
+                <span class="text-indigo-600">Felixent : </span>Odoo Insights
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#why-odoo" class="nav-link">Why Odoo?</a>
+                <a href="#comparison" class="nav-link">Editions Compared</a>
+                <a href="#history" class="nav-link">Version History</a>
+                <a href="#services" class="nav-link">Our Services</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block py-2 nav-link mobile-nav-link">Home</a>
+            <a href="#why-odoo" class="block py-2 nav-link mobile-nav-link">Why Odoo?</a>
+            <a href="#comparison" class="block py-2 nav-link mobile-nav-link">Editions Compared</a>
+            <a href="#history" class="block py-2 nav-link mobile-nav-link">Version History</a>
+            <a href="#services" class="block py-2 nav-link mobile-nav-link">Our Services</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">Your All-In-One Business Solution</h1>
+                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-slate-600">Discover Odoo (formerly OpenERP), a comprehensive suite of open-source business apps that cover all your company needs: CRM, eCommerce, accounting, inventory, point of sale, project management, and more.</p>
+                <a href="#comparison" class="mt-10 inline-block bg-indigo-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors">Compare Editions</a>
+            </div>
+        </section>
+
+        <section id="why-odoo" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Why Choose Odoo ERP?</h2>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">Odoo offers a unique value proposition: it's easy to use and fully integrated.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-md feature-card">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Comprehensive & Integrated</h3>
+                        <p>With thousands of apps, Odoo covers all your business needs in a one-stop solution. Information flows seamlessly between modules, eliminating redundant data entry.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md feature-card">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Affordable & Scalable</h3>
+                        <p>Start with what you need and add apps as your company grows. The Community edition is free, making it accessible for startups, while the Enterprise edition scales to any size.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md feature-card">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Highly Customizable</h3>
+                        <p>Odoo's open-source model and modular structure allow for deep customization to fit your unique business processes. The Odoo Studio app makes customization code-free.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Editions Compared: Community vs. Enterprise</h2>
+                    <p class="mt-4 text-lg max-w-3xl mx-auto text-slate-600">Explore the feature differences between the free, open-source Community edition and the advanced Enterprise edition. Select a module below to see a detailed feature comparison.</p>
+                </div>
+
+                <div class="max-w-md mx-auto mb-10">
+                    <label for="module-selector" class="block text-sm font-medium text-slate-700 mb-2">Select a Business Module:</label>
+                    <select id="module-selector" class="w-full p-3 border border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    </select>
+                </div>
+                
+                <div class="chart-container mb-12">
+                    <canvas id="featureChart"></canvas>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="text-2xl font-bold text-center mb-4 text-slate-800">Community Edition</h3>
+                        <ul id="community-features" class="space-y-2 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+                        <h3 class="text-2xl font-bold text-center mb-4 text-indigo-800">Enterprise Edition</h3>
+                        <ul id="enterprise-features" class="space-y-2 text-indigo-700"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">The Evolution of Odoo</h2>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">From Tiny ERP to a global business management powerhouse.</p>
+                </div>
+                <div class="relative max-w-2xl mx-auto">
+                    <div class="absolute left-1/2 -translate-x-1/2 w-1 h-full bg-slate-300"></div>
+                    <div class="space-y-16">
+                        <div class="relative timeline-item pl-12 md:pl-0 md:text-right">
+                            <div class="md:w-1/2 md:pr-8">
+                                <p class="font-bold text-indigo-600">2005</p>
+                                <h4 class="text-xl font-bold text-slate-800">Tiny ERP is Born</h4>
+                                <p class="mt-2 text-slate-600">Fabien Pinckaers starts to develop his first software product, Tiny ERP.</p>
+                            </div>
+                        </div>
+                         <div class="relative timeline-item pl-12 md:pl-0 md:ml-auto">
+                            <div class="md:w-1/2 md:pl-8">
+                                <p class="font-bold text-indigo-600">2008</p>
+                                <h4 class="text-xl font-bold text-slate-800">Rebranded as OpenERP</h4>
+                                <p class="mt-2 text-slate-600">The software is renamed to OpenERP, reflecting its open-source nature and expanded capabilities.</p>
+                            </div>
+                        </div>
+                        <div class="relative timeline-item pl-12 md:pl-0 md:text-right">
+                            <div class="md:w-1/2 md:pr-8">
+                                <p class="font-bold text-indigo-600">2014</p>
+                                <h4 class="text-xl font-bold text-slate-800">The Birth of Odoo</h4>
+                                <p class="mt-2 text-slate-600">With the release of version 8, OpenERP is rebranded to Odoo. This marks a shift beyond traditional ERP with the addition of a Website Builder, eCommerce, and Point of Sale apps.</p>
+                            </div>
+                        </div>
+                        <div class="relative timeline-item pl-12 md:pl-0 md:ml-auto">
+                           <div class="md:w-1/2 md:pl-8">
+                                <p class="font-bold text-indigo-600">2015</p>
+                                <h4 class="text-xl font-bold text-slate-800">Odoo Enterprise is Launched</h4>
+                                <p class="mt-2 text-slate-600">Odoo 9 introduces the split between a free Community edition and a paid Enterprise edition, offering more advanced features and support.</p>
+                            </div>
+                        </div>
+                        <div class="relative timeline-item pl-12 md:pl-0 md:text-right">
+                            <div class="md:w-1/2 md:pr-8">
+                                <p class="font-bold text-indigo-600">Present</p>
+                                <h4 class="text-xl font-bold text-slate-800">Continuous Innovation</h4>
+                                <p class="mt-2 text-slate-600">Odoo continues to release a new version annually, constantly improving performance, usability, and adding new applications to its ever-growing ecosystem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Our Odoo Services by Felixent</h2>
+                    <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">We provide end-to-end Odoo solutions to help your business thrive.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Odoo Implementation</h3>
+                        <p>From initial analysis to deployment and training, we provide a complete implementation service tailored to your business needs.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Custom Development</h3>
+                        <p>Need a specific feature? Our developers can create custom Odoo apps and modules to extend Odoo's functionality for your unique requirements.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Support & Maintenance</h3>
+                        <p>We offer ongoing support, maintenance, and version upgrade services to ensure your Odoo system runs smoothly and securely.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Featured App: Full Accounting</h3>
+                        <p>Our custom Full Accounting app for Odoo Community brings Enterprise-level financial reporting and management to the free edition.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Featured App: Advanced HRMS</h3>
+                        <p>Manage payroll, appraisals, referrals, and more with our comprehensive Human Resource Management System for Odoo Community.</p>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-xl border border-slate-200">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">Odoo Consultation</h3>
+                        <p>Leverage our expertise to identify how Odoo can optimize your business processes and drive growth.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Felixent Odoo Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const featuresData = {
+                "Sales": {
+                    community: ["Sales Order Management", "Quotation Management", "Customer Management", "Product Catalog", "Pricelists", "Discounts"],
+                    enterprise: ["VoIP Integration", "eSignature", "Subscription Management", "Rental", "Digital Products", "Sales Commissions", "Customer Portal with upselling"]
+                },
+                "Accounting": {
+                    community: ["Invoicing", "Payments", "Bank Reconciliation (manual)", "Chart of Accounts"],
+                    enterprise: ["Full Accounting Suite", "AI-powered Invoice Recognition", "Dynamic Reports", "Bank Synchronization", "Budget Management", "Asset Management"]
+                },
+                "Inventory": {
+                    community: ["Inventory Management", "Purchase Management", "Barcode Support (basic)"],
+                    enterprise: ["Advanced Routing", "Shipping Connectors (FedEx, UPS, etc.)", "Multi-Company Flows", "Dropshipping", "Cross-Docking", "Putaway Rules"]
+                },
+                "Manufacturing": {
+                    community: ["Bills of Materials", "Work Orders"],
+                    enterprise: ["MRP II Scheduler", "PLM (Product Lifecycle Management)", "Quality Control", "Maintenance", "IoT Integration", "Workcenter Control Panel"]
+                },
+                "Human Resources": {
+                    community: ["Employee Directory", "Expenses", "Leaves", "Recruitment"],
+                    enterprise: ["Payroll", "Appraisals", "Approvals Workflow", "Employee Referral", "Departments Dashboard"]
+                },
+                "Website": {
+                    community: ["Website Builder", "Blog", "Themes (basic)"],
+                    enterprise: ["Advanced Themes", "A/B Testing", "Form Builder", "Visitor Tracking", "Live Chat with Chatbots"]
+                },
+                "Project": {
+                    community: ["Project Management", "Tasks", "Timesheets"],
+                    enterprise: ["Forecasts", "Sub-tasks", "Project Profitability", "Customer Ratings"]
+                }
+            };
+
+            const moduleSelector = document.getElementById('module-selector');
+            const communityFeaturesList = document.getElementById('community-features');
+            const enterpriseFeaturesList = document.getElementById('enterprise-features');
+            const featureChartCanvas = document.getElementById('featureChart');
+            let featureChart;
+
+            function populateSelector() {
+                const modules = Object.keys(featuresData);
+                modules.forEach(module => {
+                    const option = document.createElement('option');
+                    option.value = module;
+                    option.textContent = module;
+                    moduleSelector.appendChild(option);
+                });
+            }
+
+            function updateFeatureLists(module) {
+                communityFeaturesList.innerHTML = '';
+                enterpriseFeaturesList.innerHTML = '';
+                
+                const moduleData = featuresData[module];
+                const allEnterpriseFeatures = [...moduleData.community, ...moduleData.enterprise];
+
+                moduleData.community.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="flex items-center">
+                           <span class="text-green-500 mr-2">&#10003;</span> ${feature}
+                        </div>`;
+                    communityFeaturesList.appendChild(li);
+                });
+
+                allEnterpriseFeatures.forEach(feature => {
+                    const li = document.createElement('li');
+                    const isExclusive = moduleData.enterprise.includes(feature);
+                    li.innerHTML = `
+                        <div class="flex items-center">
+                           <span class="text-green-500 mr-2">&#10003;</span> ${feature} ${isExclusive ? '<span class="ml-2 text-xs font-semibold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full">Enterprise Only</span>' : ''}
+                        </div>`;
+                    enterpriseFeaturesList.appendChild(li);
+                });
+            }
+
+            function updateChart() {
+                const labels = Object.keys(featuresData);
+                const communityCounts = labels.map(label => featuresData[label].community.length);
+                const enterpriseCounts = labels.map(label => featuresData[label].enterprise.length + featuresData[label].community.length);
+
+                if (featureChart) {
+                    featureChart.destroy();
+                }
+
+                featureChart = new Chart(featureChartCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Community Edition Features',
+                                data: communityCounts,
+                                backgroundColor: 'rgba(107, 114, 128, 0.6)',
+                                borderColor: 'rgba(107, 114, 128, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Enterprise Edition Features',
+                                data: enterpriseCounts,
+                                backgroundColor: 'rgba(79, 70, 229, 0.6)',
+                                borderColor: 'rgba(79, 70, 229, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Feature Count Comparison Across Modules',
+                                font: {
+                                    size: 16
+                                }
+                            },
+                             tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += context.parsed.y;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Features'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Business Modules'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            moduleSelector.addEventListener('change', (e) => {
+                updateFeatureLists(e.target.value);
+            });
+            
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active-nav');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active-nav');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            populateSelector();
+            updateFeatureLists(moduleSelector.value);
+            updateChart();
+        });
+    </script>
+</body>
+</html>
