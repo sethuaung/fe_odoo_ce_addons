@@ -1,0 +1,24 @@
+services:
+  web:
+    image: odoo:19 # Choose your desired Odoo version
+    depends_on:
+      - db
+    ports:
+      - "8069:8069" # Maps host port 8069 to container port 8069
+    volumes:
+      - odoo: /var/lib/odoo # Persistent data for Odoo filestore
+      - ./config: /etc/odoo # For Odoo configuration file
+      - ./addons: /mnt/extra-addons # For custom modules
+
+  db:
+    image: postgres:15 # Use a suitable PostgreSQL version
+    environment:
+      - POSTGRES_DB=<PROJECT DATABASE HERE>
+      - POSTGRES_USER=<SUPERADMIN USERNAME HERE>
+      - POSTGRES_PASSWORD=<SUPERADMIN PASSWORD HERE>
+    volumes:
+      - postgres:/var/lib/postgresql/data # Persistent data for PostgreSQL
+
+volumes:
+  odoo:
+  postgres:
